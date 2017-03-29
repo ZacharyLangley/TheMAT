@@ -1,4 +1,6 @@
+import datetime
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class Event(models.Model):
@@ -12,6 +14,10 @@ class Event(models.Model):
 
     def was_published_recently(self):
         return self.end_date >= timezone.now() - datetime.timedelta(days=1)
+    was_published_recently.admin_order_field = 'begin_date'
+    was_published_recently.boolean = True
+    was_published_recently.short_description = 'Recently Published'
+
 
 class Venue(models.Model):
     venue_name = models.CharField(max_length=50)
