@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html><head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The MAT</title>
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{% static "fullcalendar/fullcalendar.css" %}">
+        <script src="{% static "lib/jquery.min.js" %}"></script>
+        <script src="{% static "lib/moment.min.js" %}"></script>
+        <script src="{% static "fullcalendar/fullcalendar.js" %}"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                          // page is now ready, initialize the calendar...
+
+                          $('#calendar').fullCalendar({
+                              // put your options and callbacks here
+                          })
+
+                      });
+        </script>
+    </head><body>
+        <div class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#" contenteditable="true"><span>The MAT</span></a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active">
+                            <a href="#">Home</a>
+                        </li><li>
+                            <a href="#">Profile</a>
+                        </li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+        </div><div class="section"><div class="container"><div class="row"><div class="col-md-12"><div class="jumbotron"> <h1>Denton Music Event Calendar</h1>   </div></div></div></div></div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h1>Venues</h1>
+                    </div>
+                    <div class="col-md-8">
+                        <h1 class="text-left">Calendar</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><ul class="media-list"><li class="media"><a class="pull-left" href="#"><img class="media-object" src="https://lh5.ggpht.com/m4AKm33TFRdf2mzagtMvIarKT6KdR0AmdRGHGws8yRioKFMeUzfIdFUem-P8XhvKX-V-=w300" height="64" width="64"></a><div class="media-body"><h4 class="media-heading">Lucky Lou's</h4> <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. </p></div></li><li class="media"><a class="pull-left" href="#"><img class="media-object" src="https://scontent-dft4-2.xx.fbcdn.net/v/t1.0-1/10523838_938744249484610_4733063301282358944_n.jpg?oh=912e35d88b9249cd9c05572b5995263a&amp;oe=59613E70" height="64" width="64"></a><div class="media-body"><h4 class="media-heading">Riprocks Bar and Grill</h4><p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p></div></li><li class="media"><a class="pull-left" href="#"><img class="media-object" src="https://pbs.twimg.com/profile_images/478581426103648257/DGq_HlMT_400x400.jpeg" height="64" width="64"></a><div class="media-body"><h4 class="media-heading">Fry Street Tavern</h4><p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p></div></li><li class="media"><a class="pull-left" href="#"><img class="media-object" src="https://pbs.twimg.com/profile_images/2924347200/ee246d7cc11ad094e4d475bd0e5d8038.jpeg" height="64" width="64"></a><div class="media-body"><h4 class="media-heading">Andy's Bar and Grill</h4><p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p></div></li><li class="media"><a class="pull-left" href="#"><img class="media-object" src="https://dentonjazz135dotcom.files.wordpress.com/2012/06/dans-silverleaf-logo-best.jpg" height="64" width="64"></a><div class="media-body"><h4 class="media-heading">Dan's Silverleaf</h4><p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p></div></li></ul></div>
+                    <div class="col-md-8">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <footer class="section section-success">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Footer header</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisici elit,
+                            <br>sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+                            <br>Ut enim ad minim veniam, quis nostrud</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="text-info text-right">
+                            <br>
+                            <br>
+                        </p>
+                        <div class="row">
+                            <div class="col-md-12 hidden-lg hidden-md hidden-sm text-left">
+                                <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 hidden-xs text-right">
+                                <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+</body></html>
