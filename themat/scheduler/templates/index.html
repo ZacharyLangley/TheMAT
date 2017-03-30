@@ -30,14 +30,14 @@
                           {% for v in venues %}
                             <li class="media">
                                 <a class="pull-left" href="/profiles/{{ v.id }}">
-                                    <img class="media-object" src="https://lh5.ggpht.com/m4AKm33TFRdf2mzagtMvIarKT6KdR0AmdRGHGws8yRioKFMeUzfIdFUem-P8XhvKX-V-=w300" height="64" width="64">
+                                    <img class="media-object" src="{{v.img_url}}" height="64" width="64">
                                 </a>
                                 <div class="media-body">
                                     <h4 class="media-heading">{{v.venue_name}}</h4>
                                     <p>Venue Description </p>
                                 </div>
                             </li>
-                          {% endfor %} 
+                          {% endfor %}
                         </ul>
                     </div>
                     <div class="col-md-8">

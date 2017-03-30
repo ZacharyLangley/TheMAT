@@ -25,6 +25,7 @@ class Venue(models.Model):
     rating = models.IntegerField(default=50)
     likes = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
+    img_url = models.URLField(max_length=200, default="")
 
     def __unicode__(self):
         return self.venue_name

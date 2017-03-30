@@ -13,7 +13,7 @@ def profileList(request):
     return render(request, 'profileList.html', context)
 
 def profile(request, venue_id):
-    venue = Venue.objects.filter(id=venue_id)
+    venue = Venue.objects.get(id=venue_id)
     context = {'venue': venue}
     print(venue)
     return render(request, "profile.html", context)

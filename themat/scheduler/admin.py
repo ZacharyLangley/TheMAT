@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event
+from .models import Event, Venue
 # Register your models here.
 class EventAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -13,4 +13,4 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ['event_title']
 
 admin.site.register(Event, EventAdmin)
-
+admin.site.register(Venue)
