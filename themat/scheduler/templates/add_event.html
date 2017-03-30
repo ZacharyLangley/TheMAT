@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block body_block %}
+
+<div>
+    <h1>Add an Event</h1>
+    <br />
+
+    <div>
+        <form id="category_form" method="post" action="/scheduler/add_event/">
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            
+            {% for field in form.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text}}<br/>
+            {{ field }}
+            {% endfor %}
+
+            <br/>
+            <input type="submit" name="submit" value="Create Event"/a
+        </form>
+
+    </div>
+</div>
+{% endblock  %}

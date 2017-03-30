@@ -5,9 +5,12 @@ from . import views
 
 
 urlpatterns = [
-    #Index
     url(r'^$', views.index, name='index'),
     url(r'^profiles/$', views.profileList, name='profiles'),
     url(r'^profiles/(?P<venue_id>[0-9]+)$', views.profile, name="profile"),
-
+    url(r'^login/$', views.user_login, name='login'),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^add_event/$', views.add_event, name='add_event'),
+    url(r'^add_venue/$', views.profileList, name='add_venue'),
+    url(r'^logout/$', views.user_logout, name='logout'),
 ]

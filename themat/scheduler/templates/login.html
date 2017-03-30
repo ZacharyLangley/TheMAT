@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block body_block %}
+
+<div>
+    <h1>Login to MAT</h1>
+    <div>
+        {% if user.is_authenticated %}
+        
+        {% else %}
+        <form id="login_form" method="post" action="/login/">
+            <h2>Please Sign In</h2>
+            {% if bad_details %}
+            <p><strong>Your username and/or password were incorrect!</strong></p>
+            {% elif disabled_account %}
+            <p><strong>Your MAT account is currently disabled; we can't log you in!</strong></p>
+            {% endif %}
+
+            {% csrf_token %}
+            Username: <input type="text" class="input-block-level" placeholder="Username" 
+                             name="username" value="" size="50"/>
+            <br/>
+            Password: <input type="password" class="input-block-level" placeholder="Password"
+                             name="password" value="" size="50"/>
+            <br/>
+            <button type="submit">Sign in</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock  %}

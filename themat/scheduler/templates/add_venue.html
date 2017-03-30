@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block body_block %}
+
+    <h1>Add Venue</h1>
+
+    <form id="page_form" method="post" action="/scheduler/add_venue/">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+
+        {% for field in form.visible_fields %}
+        {{ field.errors }}<br/>
+        {{ field.help_text}}
+        {{ field }}
+        {% endfor %}
+        <br/>
+        <input type="submit" name="submit" value="Create Venue"/>
+
+    </form>
+{% endblock %}

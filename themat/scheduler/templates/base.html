@@ -33,15 +33,26 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-ex-collapse">
             <ul class="nav navbar-nav navbar-right">
+                <!--If user is logged in -->
+                {% if user.is_authenticated %}
                 <li class="active">
                     <a href="/">Home</a>
                 </li>
                 <li>
-                    <a href="/profiles">Profiles</a>
+                    <a href="/profiles">Venues</a>
                 </li>
                 <li>
-                
+                    <a href="/logout">Logout</a>
                 </li>
+                {% else  %}
+                <li>
+                    <a href="/login">Login</a>
+                </li>
+                <li>
+                    <a href="/register">Register</a>
+                </li>
+                {% endif %}
+                <!-- if user is not logged in-->
               </ul>
             </div>
           </div>
