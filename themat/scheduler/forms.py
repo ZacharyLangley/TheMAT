@@ -26,7 +26,7 @@ class VenueForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     username = forms.CharField(help_text="Username: ")
     email = forms.CharField(help_text="Email: ")
-    password = forms.CharField(widget=forms.PasswordInput())
+    password = forms.CharField(widget=forms.PasswordInput(), help_text="Password: ")
 
     class Meta:
         model = User
