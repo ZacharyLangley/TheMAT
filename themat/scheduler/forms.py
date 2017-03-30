@@ -27,10 +27,19 @@ class UserForm(forms.ModelForm):
     username = forms.CharField(help_text="Username: ")
     email = forms.CharField(help_text="Email: ")
     password = forms.CharField(widget=forms.PasswordInput(), help_text="Password: ")
+    confirm_password = forms.CharField(widget=forms.PasswordInput(),help_text="Confirm Password: ", required=True)
 
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
+
+    def clean(self):
+            cleaned_data = super(UserForm, self).clean()
+            password = cleaned_data.get("password")
+            confirm_password = cleaned_data.get("confirm_password")
+            if password != confirm_password:
+                raise forms.ValidationError("Password and Confirmation Password do not match")
+
 
 class UserProfileForm(forms.ModelForm):
     website = forms.URLField(help_text="Website: ", required=False)
