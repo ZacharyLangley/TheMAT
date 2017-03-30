@@ -3,7 +3,9 @@ from .models import Venue
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    venues = Venue.objects.all()
+    context = {'venues': venues}
+    return render(request, 'index.html', context)
 
 def profileList(request):
     venues = Venue.objects.all()
