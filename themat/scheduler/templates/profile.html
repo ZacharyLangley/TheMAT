@@ -10,6 +10,8 @@
 
                   });
 {% endblock %}
+
+
 {% block body_block %}
     <div class="section">
       <div class="container">
@@ -19,14 +21,33 @@
               <img src="https://lh5.ggpht.com/m4AKm33TFRdf2mzagtMvIarKT6KdR0AmdRGHGws8yRioKFMeUzfIdFUem-P8XhvKX-V-=w300"
               class="img-responsive">
               <div class="caption">
-                <h3>Lucky Lou's</h3>
-                <h4>1207 W Hickory St, Denton, TX 76201</h4>
+                <h3>{% for v in venue %}
+                        {{ v.venue_name }}
+                    {% endfor %}
+                </h3>
+                <h4>
+                    {% for v in venue %}
+                        {{ v.location }}
+                    {% endfor %}
+                </h4>
                 <p>Bustling watering hole with an ample beer selection including several
                   drafts plus an outdoor patio.</p>
                 <ul class="breadcrumb">
-                  <li>Rating</li>
-                  <li># of Likes</li>
-                  <li># of Views</li>
+                  <li>Rating:
+                  {% for v in venue %}
+                        {{ v.rating }}
+                    {% endfor %}
+                  </li>
+                  <li># of Likes:
+                  {% for v in venue %}
+                        {{ v.likes }}
+                    {% endfor %}
+                  </li>
+                  <li># of Views:
+                  {% for v in venue %}
+                        {{ v.views }}
+                    {% endfor %}
+                  </li>
                 </ul>
               </div>
             </div>
