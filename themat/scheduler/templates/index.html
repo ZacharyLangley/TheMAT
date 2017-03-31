@@ -4,13 +4,30 @@
             $(document).ready(function() {
 
                           // page is now ready, initialize the calendar...
-
                           $('#calendar').fullCalendar({
-                              // put your options and callbacks here
-                          })
+                            header: {
+                        				left: 'prev,next today',
+                        				center: 'title',
+                        				right: 'month,basicWeek,basicDay,listMonth'
+                        			},
+
+                              //put your options and callbacks here
+                              navLinks: true, // can click day/week names to navigate views
+                              eventLimit: true, // allow "more" link when too many events
+                              events: [
+                                {% for e in events %}
+                                {
+                                  title: '{{e.event_title}}',
+                                  start: '{{e.begin_date|date:"c"}}', // the "c" modifier converts date/time to proper format
+                                  end: '{{e.end_date|date:"c"}}',
+                                },
+                                {% endfor %}
+                              ]
+                          });
+                          // Video Player
                           $(".player").mb_YTPlayer();
 
-                      });
+            });
 
  {% endblock %}
     {% block body_block %}

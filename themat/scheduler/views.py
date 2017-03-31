@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, render_to_response
-from .models import Venue
+from .models import Venue, Event
 from scheduler.models import Event, Venue
 from scheduler.forms import EventForm, VenueForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
@@ -11,7 +11,8 @@ from django.template import RequestContext
 # Create your views here.
 def index(request):
     venues = Venue.objects.all()
-    context = {'venues': venues}
+    events = Event.objects.all()
+    context = {'venues': venues, 'events': events}
     return render(request, 'index.html', context)
 
 def profileList(request):
@@ -40,7 +41,7 @@ def user_login(request):
                 context_dict['disabled_account'] = True
                 return HttpResponse("Your MAT account is disabled.")
         else:
-            print "Invalid login details: {0}, {1}".format(username, password)
+            #print "Invalid login details: {0}, {1}".format(username, password)
             context_dict['bad details'] = True
             return HttpResponse("Invalid login details supplied.")
     else:
@@ -69,7 +70,8 @@ def register(request):
             profile.save()
             registered = True
         else:
-            print user_form.errors, profile_form.errors
+            pass
+            #print user_form.errors, profile_form.errors
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
@@ -96,4 +98,3 @@ def add_venue(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/#/')
-
