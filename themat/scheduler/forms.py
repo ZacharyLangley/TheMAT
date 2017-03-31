@@ -24,10 +24,10 @@ class VenueForm(forms.ModelForm):
         fields = ('Vname', 'location', 'rating', 'views', 'likes')
 
 class UserForm(forms.ModelForm):
-    username = forms.CharField(help_text="Username: ")
-    email = forms.CharField(help_text="Email: ")
-    password = forms.CharField(widget=forms.PasswordInput(), help_text="Password: ")
-    confirm_password = forms.CharField(widget=forms.PasswordInput(),help_text="Confirm Password: ", required=True)
+    username = forms.CharField(help_text="* Username: ")
+    email = forms.CharField(help_text="* Email: ")
+    password = forms.CharField(widget=forms.PasswordInput(), help_text="* Password: ")
+    confirm_password = forms.CharField(widget=forms.PasswordInput(),help_text="* Confirm Password: ", required=True)
 
     class Meta:
         model = User
@@ -44,6 +44,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     website = forms.URLField(help_text="Website: ", required=False)
     picture = forms.ImageField(help_text="Image: ", required=False)
+    
     class Meta:
         model = UserProfile
         fields = ('website', 'picture')
