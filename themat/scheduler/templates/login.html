@@ -2,11 +2,11 @@
 
 {% block body_block %}
 
-<div>
+<div class="container">
     <h1>Login to MAT</h1>
     <div>
         {% if user.is_authenticated %}
-        
+
         {% else %}
         <form id="login_form" method="post" action="/login/">
             <h2>Please Sign In</h2>
@@ -17,7 +17,7 @@
             {% endif %}
 
             {% csrf_token %}
-            Username: <input type="text" class="input-block-level" placeholder="Username" 
+            Username: <input type="text" class="input-block-level" placeholder="Username"
                              name="username" value="" size="50"/>
             <br/>
             Password: <input type="password" class="input-block-level" placeholder="Password"

@@ -8,13 +8,29 @@
                           $('#calendar').fullCalendar({
                               // put your options and callbacks here
                           })
+                          $(".player").mb_YTPlayer();
 
                       });
 
  {% endblock %}
     {% block body_block %}
-        <div class="section">
-          <div class="container"><div class="row"><div class="col-md-12"><div class="jumbotron"> <h1>The MAT Calendar</h1>   </div></div></div></div>
+        <div style="padding-top: 0" class="section">
+          <!-- <div class="container"><div class="row"><div class="col-md-12"><div class="jumbotron"> <h1>The MAT Calendar</h1>   </div></div></div></div> -->
+          <!--Video Section-->
+            <section class="content-section video-section">
+            <div class="pattern-overlay">
+            <a id="bgndVideo" class="player" data-property="{videoURL:'https://www.youtube.com/watch?v=JE5pur-BNFM',containment:'.video-section', quality:'large', autoPlay:true, mute:true, opacity:1}">bg</a>
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                  <h1>The MAT Calendar</h1>
+                  <h3>Denton Music Events</h3>
+          	   </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!--Video Section Ends Here-->
             <div class="container">
                 <div class="row">
                 </div>

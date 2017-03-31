@@ -8,19 +8,21 @@
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.     css" rel="stylesheet" type="text/css">
         <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"         rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{% static "fullcalendar/fullcalendar.css" %}">
+        <link rel="stylesheet" href="{% static "css/video.css" %}">
         <script src="{% static "lib/jquery.min.js" %}"></script>
         <script src="{% static "lib/moment.min.js" %}"></script>
         <script src="{% static "fullcalendar/fullcalendar.js" %}"></script>
+        <script src="http://pupunzi.com/mb.components/mb.YTPlayer/demo/inc/jquery.mb.YTPlayer.js"></script>
         <script type="text/javascript">
-        
+
         {% block script_block %}
             <!--Calender script from index page goes here in index.html -->
         {% endblock %}
-        
+
         </script>
     </head>
     <body>
-        <div class="navbar navbar-default navbar-static-top">
+        <div class="navbar navbar-default navbar-inverse navbar-static-top">
            <div class="container">
            <div class="navbar-header">
            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
@@ -28,14 +30,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/" contenteditable="False"><span>The MAT</span></a>
-        </div>
+          </button>
+          <a class="navbar-brand" href="/" contenteditable="False"><span>The MAT</span></a>
+           </div>
         <div class="collapse navbar-collapse" id="navbar-ex-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <!--If user is logged in -->
                 {% if user.is_authenticated %}
-                <li class="active">
+                <li>
                     <a href="/">Home</a>
                 </li>
                 <li>
@@ -94,4 +96,3 @@
         </footer>
     </body>
 </html>
-
