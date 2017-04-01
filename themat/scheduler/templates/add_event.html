@@ -7,7 +7,7 @@
     <br />
 
     <div>
-        <form id="category_form" method="post" action="/scheduler/add_event/">
+        <form id="event_form" method="post" action="/add_event/">
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
             {{ hidden }}
@@ -16,11 +16,11 @@
             {% for field in form.visible_fields %}
             {{ field.errors }}
             {{ field.help_text}}<br/>
-            {{ field }}
+            {{ field }}<br/>
             {% endfor %}
 
             <br/>
-            <input type="submit" name="submit" value="Create Event"/a
+            <input type="submit" name="submit" value="Create Event"/a>
         </form>
 
     </div>

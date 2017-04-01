@@ -3,19 +3,19 @@ from scheduler.models import Event, Venue, UserProfile
 from django.contrib.auth.models import User
 
 class EventForm(forms.ModelForm):
-    title = forms.CharField(required=True, max_length=128,label="Event Title: ")
-    startdate = forms.DateField(required=True, label="Start Date: ")
-    enddate = forms.DateField(required=True, label="End Date: ")
-    location = forms.CharField(required=True, max_length=128, label="Location: ")
+    event_title = forms.CharField(max_length=128, help_text="Event Title: ")
+    begin_date = forms.DateField(input_formats=['%m/%d/%Y'], required=True, help_text="Start Date: MM/DD/YYYY")
+    end_date = forms.DateField(input_formats=['%m/%d/%Y'], required=True, help_text="End Date: MM/DD/YYYY")
+    location = forms.CharField(max_length=128, help_text="Location: ")
 
     class Meta:
         model = Event
-        fields = ('title', 'startdate', 'enddate', 'location')
+        fields = ('event_title', 'begin_date', 'end_date', 'location')
 
 class VenueForm(forms.ModelForm):
-    Vname = forms.CharField(required=True, max_length=128,label="Venue: ")
-    location = forms.CharField(required=True, max_length=128, label="Location: ")
-    rating = forms.IntegerField(widget=forms.HiddenInput(), initial=50)
+    Vname = forms.CharField(required=True, max_length=128,help_text="Venue: ")
+    location = forms.CharField(required=True, max_length=128, help_text="Location: ")
+    rating = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
@@ -44,7 +44,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     website = forms.URLField(help_text="Website: ", required=False)
     picture = forms.ImageField(help_text="Image: ", required=False)
-    
+
     class Meta:
         model = UserProfile
         fields = ('website', 'picture')

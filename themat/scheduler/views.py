@@ -88,7 +88,22 @@ def register(request):
 
 @login_required
 def add_event(request):
-    return HttpResponseRedirect('/#/')
+    context = RequestContext(request)
+    context_dict = {}
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return index(request)
+        else:
+            print form.errors
+    else:
+        form = EventForm()
+
+    context_dict['form'] = form
+    return render_to_response('add_event.html', context_dict, context)
+
+
 
 @login_required
 def add_venue(request):
