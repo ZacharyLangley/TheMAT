@@ -1,12 +1,14 @@
 from django import forms
 from scheduler.models import Event, Venue, UserProfile
 from django.contrib.auth.models import User
+from django.forms.extras.widgets import SelectDateWidget
 
 class EventForm(forms.ModelForm):
     event_title = forms.CharField(max_length=128, help_text="Event Title: ")
-    begin_date = forms.DateField(input_formats=['%m/%d/%Y'], required=True, help_text="Start Date: MM/DD/YYYY")
-    end_date = forms.DateField(input_formats=['%m/%d/%Y'], required=True, help_text="End Date: MM/DD/YYYY")
     location = forms.CharField(max_length=128, help_text="Location: ")
+    begin_date = forms.DateField(widget=SelectDateWidget( empty_label=("Choose Year", "Choose Month", "Choose Day"),),)
+    end_date = forms.DateField(widget=SelectDateWidget( empty_label=("Choose Year", "Choose Month", "Choose Day"),),)
+
 
     class Meta:
         model = Event
