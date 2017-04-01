@@ -26,6 +26,12 @@ def profile(request, venue_id):
     print(venue)
     return render(request, "profile.html", context)
 
+def event_page(request, event_id):
+    event = Event.objects.get(id=event_id)
+    context = {'event': event}
+    print(event)
+    return render(request, "eventpage.html", context)
+
 def user_login(request):
     context = RequestContext(request)
     context_dict = {}
@@ -98,7 +104,7 @@ def add_event(request):
                 form.save(commit=True)
                 return index(request)
             else:
-                print form.errors
+                print (form.errors)
         else:
             form = EventForm()
 

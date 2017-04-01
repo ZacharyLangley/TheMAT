@@ -8,11 +8,12 @@ class EventForm(forms.ModelForm):
     location = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}), max_length=128, help_text="Location: ")
     begin_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),),)     # adds drop down menu
     end_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),),)
-
+    event_description = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}),max_length=128, help_text="Event Description: ")
+    img_url = forms.URLField(widget=forms.TextInput(attrs={'style' : 'color:black'}), help_text="Image URL: ", required=False)
 
     class Meta:
         model = Event
-        fields = ('event_title', 'begin_date', 'end_date', 'location')
+        fields = ('event_title', 'begin_date', 'end_date', 'location', 'event_description', 'img_url')
 
 class VenueForm(forms.ModelForm):
     Vname = forms.CharField(required=True, max_length=128,help_text="Venue: ")
@@ -50,4 +51,3 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('website', 'picture')
-

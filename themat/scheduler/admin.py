@@ -7,6 +7,7 @@ class EventAdmin(admin.ModelAdmin):
         ('Date information', {'fields': ['begin_date']}),
         ('Date Information', {'fields': ['end_date']}),
         ('Location', {'fields': ['location']}),
+        ('Image URL', {'fields': ['img_url']}),
     ]
     list_display = ('event_title', 'begin_date', 'was_published_recently')
     list_filter = ['begin_date']

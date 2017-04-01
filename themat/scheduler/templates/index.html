@@ -20,6 +20,7 @@
                                   title: '{{e.event_title}}',
                                   start: '{{e.begin_date|date:"c"}}', // the "c" modifier converts date/time to proper format
                                   end: '{{e.end_date|date:"c"}}',
+                                  url: '/event/{{ e.id }}'
                                 },
                                 {% endfor %}
                               ]
