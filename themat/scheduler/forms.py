@@ -6,7 +6,7 @@ from django.forms.extras.widgets import SelectDateWidget
 class EventForm(forms.ModelForm):
     event_title = forms.CharField(max_length=128, help_text="Event Title: ")
     location = forms.CharField(max_length=128, help_text="Location: ")
-    begin_date = forms.DateField(widget=SelectDateWidget( empty_label=("Choose Year", "Choose Month", "Choose Day"),),)
+    begin_date = forms.DateField(widget=SelectDateWidget( empty_label=("Choose Year", "Choose Month", "Choose Day"),),)     # adds drop down menu
     end_date = forms.DateField(widget=SelectDateWidget( empty_label=("Choose Year", "Choose Month", "Choose Day"),),)
 
 
