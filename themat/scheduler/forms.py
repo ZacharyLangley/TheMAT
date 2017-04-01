@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from django.forms.extras.widgets import SelectDateWidget
 
 class EventForm(forms.ModelForm):
-    event_title = forms.CharField(max_length=128, help_text="Event Title: ")
-    location = forms.CharField(max_length=128, help_text="Location: ")
-    begin_date = forms.DateField(widget=SelectDateWidget( empty_label=("Choose Year", "Choose Month", "Choose Day"),),)     # adds drop down menu
-    end_date = forms.DateField(widget=SelectDateWidget( empty_label=("Choose Year", "Choose Month", "Choose Day"),),)
+    event_title = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}),max_length=128, help_text="Event Title: ")
+    location = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}), max_length=128, help_text="Location: ")
+    begin_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),),)     # adds drop down menu
+    end_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),),)
 
 
     class Meta:
@@ -26,10 +26,10 @@ class VenueForm(forms.ModelForm):
         fields = ('Vname', 'location', 'rating', 'views', 'likes')
 
 class UserForm(forms.ModelForm):
-    username = forms.CharField(help_text="* Username: ")
-    email = forms.CharField(help_text="* Email: ")
-    password = forms.CharField(widget=forms.PasswordInput(), help_text="* Password: ")
-    confirm_password = forms.CharField(widget=forms.PasswordInput(),help_text="* Confirm Password: ", required=True)
+    username = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}), help_text="* Username: ")
+    email = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}), help_text="* Email: ")
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'style' : 'color:black'}), help_text="* Password: ")
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'style' : 'color:black'}), help_text="* Confirm Password: ", required=True)
 
     class Meta:
         model = User
@@ -44,7 +44,7 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    website = forms.URLField(help_text="Website: ", required=False)
+    website = forms.URLField(widget=forms.TextInput(attrs={'style' : 'color:black'}), help_text="Website: ", required=False)
     picture = forms.ImageField(help_text="Image: ", required=False)
 
     class Meta:
