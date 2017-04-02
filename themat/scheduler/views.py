@@ -35,18 +35,19 @@ def index(request):
 
     return response
 
-def profileList(request):
+def venue_list(request):
     venues = Venue.objects.all()
     context = {'venues': venues}
-    return render(request, 'profileList.html', context)
+    return render(request, 'venue_list.html', context)
 
-def profile(request, venue_id):
+def venue_detail(request, venue_id):
     rc = RequestContext(request)
 
     venue = Venue.objects.get(id=venue_id)
-    context = {'venue': venue}
+    events = Event.objects.filter(location=venue.venue_name)
+    context = {'venue': venue, 'events': events}
 
-    response = render_to_response('profile.html', context, rc)
+    response = render_to_response('venue_detail.html', context, rc)
 
     if 'last_visitV'+str(venue_id) in request.COOKIES: #cookie exists
         last_visit = request.COOKIES['last_visitV'+str(venue_id)]
@@ -63,13 +64,14 @@ def profile(request, venue_id):
     print(venue.views)
     return response
 
-def event_page(request, event_id):
+def event_detail(request, event_id):
     rc = RequestContext(request)
 
     event = Event.objects.get(id=event_id)
-    context = {'event': event}
+    venue = Venue.objects.get(venue_name=event.location)
+    context = {'event': event, 'venue': venue}
 
-    response = render_to_response('eventpage.html', context, rc)
+    response = render_to_response('event_detail.html', context, rc)
 
     if 'last_visitE'+str(event_id) in request.COOKIES: #cookie exists
         last_visit = request.COOKIES['last_visitE'+str(event_id)]

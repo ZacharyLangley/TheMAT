@@ -63,12 +63,12 @@
                         <ul class="media-list">
                           {% for v in venues %}
                             <li class="media">
-                                <a class="pull-left" href="/profiles/{{ v.id }}">
+                                <a class="pull-left" href="/venue/{{ v.id }}">
                                     <img class="media-object" src="{{v.img_url}}" height="64" width="64">
                                 </a>
                                 <div class="media-body">
                                     <h4 class="media-heading">{{v.venue_name}}</h4>
-                                    <p>Venue Description </p>
+                                    <p>{{v.description}} </p>
                                 </div>
                             </li>
                           {% endfor %}
