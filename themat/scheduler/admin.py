@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, Venue
+from .models import Event, Venue, UserProfile
 # Register your models here.
 class EventAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -15,3 +15,4 @@ class EventAdmin(admin.ModelAdmin):
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(Venue)
+admin.site.register(UserProfile)

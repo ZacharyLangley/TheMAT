@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^add_event/$', views.add_event, name='add_event'),
     url(r'^add_venue/$', views.profileList, name='add_venue'),
     url(r'^logout/$', views.user_logout, name='logout'),
+    url(r'^userprofile/$', views.userprofile, name='userprofile'),
 ]

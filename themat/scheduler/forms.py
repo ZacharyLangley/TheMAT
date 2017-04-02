@@ -34,7 +34,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'email', 'password',)
 
     def clean(self):
             cleaned_data = super(UserForm, self).clean()

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, render_to_response
 from .models import Venue, Event
-from scheduler.models import Event, Venue
+from scheduler.models import Event, Venue, UserProfile
 from scheduler.forms import EventForm, VenueForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.template import RequestContext
 from datetime import datetime
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
@@ -172,8 +173,18 @@ def add_event(request):
 
 
 @login_required
-def add_venue(request):
-    return HttpResponseRedirect('/#/')
+def userprofile(request):
+    context = RequestContext(request)
+    context_dict = {}
+    u = User.objects.get(username=request.user)
+    try:
+        up = UserProfile.object.get(user=u)
+    except:
+        up = None
+    context_dict['user'] = u
+    context_dict['userprofile'] = up
+    return render_to_response('userprofile.html', context_dict, context)
+
 
 @login_required
 def user_logout(request):
