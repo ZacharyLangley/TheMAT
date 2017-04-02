@@ -7,13 +7,32 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.template import RequestContext
+from datetime import datetime
 
 # Create your views here.
 def index(request):
+    rc = RequestContext(request)
+
     venues = Venue.objects.all()
     events = Event.objects.all()
     context = {'venues': venues, 'events': events}
-    return render(request, 'index.html', context)
+
+    response = render_to_response('index.html', context, rc)
+    #visits = int(request.COOKIES.get('visits', '0'))
+
+    #if 'last_visit' in request.COOKIES:
+        #print("cookie exists")
+        #last_visit = request.COOKIES['last_visit']
+        #last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+
+        #if (datetime.now() - last_visit_time).days > 0:
+            #response.set_cookie("visits", visits+1)
+            #response.set_cookie('last_visit', datetime.now())
+    #else:
+        #print("Cookies don exits")
+        #response.set_cookie('last_visit', datetime.now())
+
+    return response
 
 def profileList(request):
     venues = Venue.objects.all()
@@ -21,16 +40,52 @@ def profileList(request):
     return render(request, 'profileList.html', context)
 
 def profile(request, venue_id):
+    rc = RequestContext(request)
+
     venue = Venue.objects.get(id=venue_id)
     context = {'venue': venue}
-    print(venue)
-    return render(request, "profile.html", context)
+
+    response = render_to_response('profile.html', context, rc)
+
+    if 'last_visitV'+str(venue_id) in request.COOKIES: #cookie exists
+        last_visit = request.COOKIES['last_visitV'+str(venue_id)]
+        last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+
+        if (datetime.now() - last_visit_time).days > 0:
+            venue.views += 1
+            venue.save()
+            response.set_cookie('last_visitV'+str(venue_id), datetime.now())
+    else: #cookie don exits
+        response.set_cookie('last_visitV'+str(venue_id), datetime.now())
+        venue.views += 1
+        venue.save()
+    print(venue.views)
+    return response
 
 def event_page(request, event_id):
+    rc = RequestContext(request)
+
     event = Event.objects.get(id=event_id)
     context = {'event': event}
+
+    response = render_to_response('eventpage.html', context, rc)
+
+    if 'last_visitE'+str(event_id) in request.COOKIES: #cookie exists
+        last_visit = request.COOKIES['last_visitE'+str(event_id)]
+        last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+
+        if (datetime.now() - last_visit_time).days > 0:
+            event.views += 1
+            event.save()
+            response.set_cookie('last_visitE'+str(event_id), datetime.now())
+    else: #cookie don exits
+        response.set_cookie('last_visitE'+str(event_id), datetime.now())
+        event.views += 1
+        event.save()
+    print(event.views)
     print(event)
-    return render(request, "eventpage.html", context)
+
+    return response
 
 def user_login(request):
     context = RequestContext(request)
