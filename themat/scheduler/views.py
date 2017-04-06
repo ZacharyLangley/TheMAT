@@ -153,21 +153,22 @@ def register(request):
 def add_event(request):
     context = RequestContext(request)
     context_dict = {}
-
     if request.user.is_authenticated():  # make sure user is logged in
 
         if request.method == 'POST':
             form = EventForm(request.POST)
+
             if form.is_valid():
                 form.save(commit=True)
-                return index(request)
+                return HttpResponseRedirect("/add_event/")
+
             else:
                 print (form.errors)
+
         else:
             form = EventForm()
-
-        context_dict['form'] = form
-        return render_to_response('add_event.html', context_dict, context)
+            context_dict['form'] = form
+            return render_to_response('add_event.html', context_dict, context)
 
     else:
         return HttpResponseRedirect('/login/')  # if user is not logged in, go to log in screen
