@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 
 {% block body_block %}
-<body style="color:white">
-<div class="section" style="background-color: darkseagreen" xmlns="http://www.w3.org/1999/html">
 
-    <div class="container">
-        {% if user.is_authenticated %}
-
-        {% else %}
-            </br>
-        <div class="col-xs-8">
-            <h1>Login to MAT</h1>
+<div class="row" style="background-color: darkseagreen">
+<div class="container">
+   
+    <div class="col-xs-8">
+        <div class="col-xs-2"></div>
+        <div class class="col-xs-10">
+            <h1 style="color:white">Login to MAT</h1>
         </div>
-        <div class="col-xs-4">
+    </div>
+    
+    <div class="col-xs-4">
+        {% if user.is_authenticated %}
+        {% else %}
         <form id="login_form" method="post" action="/login/">
-            <h2>Please Sign In</h2>
+            <h2 style="color:white">Please Sign In</h2>
             {% if bad_details %}
             <p><strong>Your username and/or password were incorrect!</strong></p>
             {% elif disabled_account %}
@@ -22,17 +24,16 @@
             {% endif %}
 
             {% csrf_token %}
-            Username: <input type="text" class="input-block-level" style="color:black" placeholder="Username"
-                             name="username" value="" size="50"/>
+            <p style="color:white">Username: <p><input type="text" class="input-block-level"  name="username" value="" size="50"/>
             <br/>
-            Password: <input type="password" class="input-block-level" style="color:black" placeholder="Password"
-                             name="password" value="" size="50"/>
+            <p style="color:white">Password: <p> <input type="password" class="input-block-level" name="password" value="" size="50"/>
             <br/>
-            <button class="btn btn-primary" type="submit" style="background-color:darkgrey">Sign in</button>
+            <button type="submit">Sign in</button>
         </form>
-
         {% endif %}
-    </div>
+        </div>
+        </div>
     </div>
 </div>
+
 {% endblock  %}
