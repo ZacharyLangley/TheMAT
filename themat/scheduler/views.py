@@ -44,7 +44,7 @@ def venue_detail(request, venue_id):
     rc = RequestContext(request)
 
     venue = Venue.objects.get(id=venue_id)
-    events = Event.objects.filter(location=venue.venue_name)
+    events = Event.objects.filter(location=venue)
     context = {'venue': venue, 'events': events}
 
     response = render_to_response('venue_detail.html', context, rc)
@@ -68,7 +68,7 @@ def event_detail(request, event_id):
     rc = RequestContext(request)
 
     event = Event.objects.get(id=event_id)
-    venue = Venue.objects.get(venue_name=event.location)
+    venue = Venue.objects.get(id=event.location.id)
     context = {'event': event, 'venue': venue}
 
     response = render_to_response('event_detail.html', context, rc)

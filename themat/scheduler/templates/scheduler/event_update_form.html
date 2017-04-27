@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="section section-primary">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Event</h1>
+            <form style="color: #444" action="" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <input type="submit" value="Submit" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
