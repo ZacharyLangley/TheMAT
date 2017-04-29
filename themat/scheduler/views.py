@@ -45,7 +45,11 @@ def venue_detail(request, venue_id):
 
     venue = Venue.objects.get(id=venue_id)
     events = Event.objects.filter(location=venue)
-    context = {'venue': venue, 'events': events}
+    if request.user.is_authenticated():  # make sure user is logged in
+        up = UserProfile.objects.get(user=request.user)
+        context = {'venue': venue, 'events': events, 'up':up}
+    else:
+        context = {'venue': venue, 'events': events}
 
     response = render_to_response('venue_detail.html', context, rc)
 
@@ -61,7 +65,6 @@ def venue_detail(request, venue_id):
         response.set_cookie('last_visitV'+str(venue_id), datetime.now())
         venue.views += 1
         venue.save()
-    print(venue.views)
     return response
 
 def event_detail(request, event_id):
@@ -85,8 +88,6 @@ def event_detail(request, event_id):
         response.set_cookie('last_visitE'+str(event_id), datetime.now())
         event.views += 1
         event.save()
-    print(event.views)
-    print(event)
 
     return response
 
@@ -100,7 +101,7 @@ def user_login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/#/')
+                return HttpResponseRedirect('/')
             else:
                 context_dict['disabled_account'] = True
                 return HttpResponse("Your MAT account is disabled.")
@@ -154,21 +155,28 @@ def add_event(request):
     context = RequestContext(request)
     context_dict = {}
     if request.user.is_authenticated():  # make sure user is logged in
+        venue_manager = UserProfile.objects.get(user=request.user)
+        if venue_manager.is_venue:  # make sure manages a venue
+            if request.method == 'POST':
+                form = EventForm(request.POST)
 
-        if request.method == 'POST':
-            form = EventForm(request.POST)
+                if form.is_valid():
+                    venue_manager = UserProfile.objects.get(user=request.user)
+                    event = form.save(commit=False)
+                    event.location = venue_manager.location
+                    event.save()
+                    url = '/event/' + str(event.id)
+                    return redirect(url)
 
-            if form.is_valid():
-                form.save(commit=True)
-                return HttpResponseRedirect("/add_event/")
+                else:
+                    print (form.errors)
 
             else:
-                print (form.errors)
-
+                form = EventForm()
+                context_dict['form'] = form
+                return render_to_response('add_event.html', context_dict, context)
         else:
-            form = EventForm()
-            context_dict['form'] = form
-            return render_to_response('add_event.html', context_dict, context)
+            return redirect('/')
 
     else:
         return HttpResponseRedirect('/login/')  # if user is not logged in, go to log in screen
@@ -181,15 +189,19 @@ def userprofile(request):
     context_dict = {}
     u = User.objects.get(username=request.user)
     try:
-        up = UserProfile.object.get(user=u)
+        up = UserProfile.objects.get(user=u)
     except:
         up = None
     context_dict['user'] = u
     context_dict['userprofile'] = up
+    context_dict = {
+        'user':u,
+        'userprofile':up
+    }
     return render_to_response('userprofile.html', context_dict, context)
 
 
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect('/#/')
+    return HttpResponseRedirect('/')

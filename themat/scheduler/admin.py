@@ -14,6 +14,32 @@ class EventAdmin(admin.ModelAdmin):
     list_filter = ['begin_date']
     search_fields = ['event_title']
 
+class UserProfileAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['user']}),
+        ('Website', {'fields': ['website']}),
+        ('Is Venue', {'fields': ['is_venue']}),
+        ('Location', {'fields': ['location']}),
+        ('picture', {'fields': ['picture']}),
+    ]
+    list_display = ('user', 'website', 'is_venue', 'location')
+    list_filter = ['location']
+    search_fields = ['user']
+
+class VenueAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['venue_name']}),
+        ('Location', {'fields': ['location']}),
+        ('Rating', {'fields': ['rating']}),
+        ('Likes', {'fields': ['likes']}),
+        ('Views', {'fields': ['views']}),
+        ('Image URL', {'fields': ['img_url']}),
+        ('Description', {'fields': ['description']}),
+
+        ]
+    list_display = ('venue_name', 'location', 'rating', 'likes', 'views')
+    search_fields = ['venue_name']
+
 admin.site.register(Event, EventAdmin)
-admin.site.register(Venue)
-admin.site.register(UserProfile)
+admin.site.register(Venue, VenueAdmin)
+admin.site.register(UserProfile, UserProfileAdmin)

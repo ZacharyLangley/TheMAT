@@ -1,19 +1,26 @@
 {% extends "base.html" %}
-
 {% block body_block %}
-<div>
-   	   <h1> Profile <h1> <br/>
-	   <h2>{{ user.username }}</h2>
-       <h3> </h3>
-       <h3> </h3>
-       <p>Email: {{ user.email }}</p>
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>Profile</h1>
+				{% if userprofile.picture %}
+					<img src="{{ userprofile.picture.url }}" height="300" width="200"/>
+				{% else %}
+					<img src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_6-512.png" style="width:300px;height:300px">
+				{% endif %}
 
-       {% if user_profile %}
-	   <p>Website: <a href="{{ userprofile.website }}">{{userprofile.website}}</a></p>
-           <br/>
-       {% if user_profile.picture %}
-	        <img src="{{ userprofile.picture.url }}"  />
-	   {% endif %}
-	   {% endif %}
+				<p><font size = "5">Username: {{ user.username }}</font></p>
+				<p>Email: {{ user.email }}</p>
+				{% if userprofile.website %}
+					<p>Website: <a href="{{ userprofile.website }}">{{userprofile.website}}</a></p>
+				{% endif %}
+				<p>Subscribed Venues: </p>
+				<input class="btn btn-primary" type="submit" value="Edit Profile" style="background-color:darkgrey "/>
+			</div>
+		</div>
+
+    </div>
 </div>
 {% endblock %}

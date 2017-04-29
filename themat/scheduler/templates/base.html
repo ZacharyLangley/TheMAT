@@ -9,9 +9,9 @@
         <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{% static "fullcalendar/fullcalendar.css" %}">
         <link rel="stylesheet" href="{% static "css/video.css" %}">
-        <link rel="stylesheet" href="{% static "css/animate.css" %}">
         <script src="{% static "lib/jquery.min.js" %}"></script>
         <script src="{% static "lib/moment.min.js" %}"></script>
+        <script src="{% static "lib/animate.js" %}"></script>
         <script src="{% static "fullcalendar/fullcalendar.js" %}"></script>
         <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script src="http://pupunzi.com/mb.components/mb.YTPlayer/demo/inc/jquery.mb.YTPlayer.js"></script>
@@ -43,12 +43,18 @@
                     <a href="/">Home</a>
                 </li>
                 <li>
+                    <a href="/profile">Profile</a>
+                </li>
+                <li>
                     <a href="/venues">Venues</a>
                 </li>
                 <li>
                     <a href="/logout">Logout</a>
                 </li>
                 {% else  %}
+                <li>
+                    <a href="/venues">Venues</a>
+                </li>
                 <li>
                     <a href="/login">Login</a>
                 </li>

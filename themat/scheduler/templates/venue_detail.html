@@ -46,6 +46,10 @@ $(document).ready(function() {
                   <li># of Views: {{ venue.views }}</li>
                 </ul>
                   <input class="btn btn-primary" type="submit" value="Like {{ venue.venue_name }}!" style="background-color:darkgrey "/>
+                  {% if up.location == venue %}
+                  <a href="/add_event/" class="btn btn-info" role="button">Add Event</a>
+                  {% endif %}
+
               </div>
               <a href="https://www.google.com/maps/place/{{venue.location}}" target="_blank"><img class="img-responsive" src="http://maps.googleapis.com/maps/api/staticmap?center={{venue.location}}&amp;zoom=18&amp;size=300x300&amp;sensor=false"></a>
             </div>

@@ -44,7 +44,10 @@ class Event(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.FileField()
+    is_venue = models.BooleanField(default=False)
+    location = models.ForeignKey(Venue, null=True)
+
 
     def __unicode__(self):
         return self.user.username
