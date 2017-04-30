@@ -9,6 +9,7 @@ from datetime import datetime
 from django.template import RequestContext
 from datetime import datetime
 from django.contrib.auth.models import User
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
 
 # Create your views here.
 def index(request):
@@ -72,7 +73,11 @@ def event_detail(request, event_id):
 
     event = Event.objects.get(id=event_id)
     venue = Venue.objects.get(id=event.location.id)
-    context = {'event': event, 'venue': venue}
+    if request.user.is_authenticated():  # make sure user is logged in
+        up = UserProfile.objects.get(user=request.user)
+        context = {'venue': venue, 'event': event, 'up':up}
+    else:
+        context = {'venue': venue, 'event': event}
 
     response = render_to_response('event_detail.html', context, rc)
 
@@ -159,18 +164,17 @@ def add_event(request):
         if venue_manager.is_venue:  # make sure manages a venue
             if request.method == 'POST':
                 form = EventForm(request.POST)
-
                 if form.is_valid():
                     venue_manager = UserProfile.objects.get(user=request.user)
                     event = form.save(commit=False)
                     event.location = venue_manager.location
+                    event.begin_date = str(form.cleaned_data['begin_date']) + ' ' + str(form.cleaned_data['begin_time'])
+                    event.end_date = str(form.cleaned_data['end_date']) + ' ' + str(form.cleaned_data['end_time'])
                     event.save()
-                    url = '/event/' + str(event.id)
+                    url = '/event/' +  str(event.id)
                     return redirect(url)
-
                 else:
                     print (form.errors)
-
             else:
                 form = EventForm()
                 context_dict['form'] = form
@@ -181,27 +185,65 @@ def add_event(request):
     else:
         return HttpResponseRedirect('/login/')  # if user is not logged in, go to log in screen
 
+class UpdateEvent(UpdateView):
+    model = Event
+    fields = [
+        'event_title', 'begin_date', 'end_date', 'event_description', 'img_url'
+    ]
 
+    #Checks to see if user is logged in and is updating their own object
+    def user_passes_test(self, request):
+        if request.user.is_authenticated():
+            venue_manager = UserProfile.objects.get(user=request.user)
+            self.object = self.get_object()
+            return self.object.location == venue_manager.location
+        return False
 
-@login_required
+    def dispatch(self, request, *args, **kwargs):
+        if not self.user_passes_test(request):
+            return redirect('/')
+        return super(UpdateEvent, self).dispatch(
+            request, *args, **kwargs)
+
+class DeleteEvent(DeleteView):
+    model = Event
+    success_url = '/'
+    login_url = '/login/'
+
+    def get_object(self, queryset=None):
+        """ Hook to ensure object is owned by request.user. """
+        if self.request.user.is_authenticated():
+            obj = super(DeleteEvent, self).get_object()
+            venue_manager = UserProfile.objects.get(user=self.request.user)
+            if not obj.location == venue_manager.location:
+                raise Http404
+            return obj
+        else:
+            raise Http404
+
 def userprofile(request):
-    context = RequestContext(request)
-    context_dict = {}
-    u = User.objects.get(username=request.user)
-    try:
-        up = UserProfile.objects.get(user=u)
-    except:
-        up = None
-    context_dict['user'] = u
-    context_dict['userprofile'] = up
-    context_dict = {
-        'user':u,
-        'userprofile':up
-    }
-    return render_to_response('userprofile.html', context_dict, context)
+    if request.user.is_authenticated():  # make sure user is logged in
+        context = RequestContext(request)
+        context_dict = {}
+        u = User.objects.get(username=request.user)
+        try:
+            up = UserProfile.objects.get(user=u)
+        except:
+            up = None
+        context_dict['user'] = u
+        context_dict['userprofile'] = up
+        context_dict = {
+            'user':u,
+            'userprofile':up
+        }
+        return render_to_response('userprofile.html', context_dict, context)
+    else:
+        return redirect('/login/')
 
 
-@login_required
 def user_logout(request):
-    logout(request)
-    return HttpResponseRedirect('/')
+    if request.user.is_authenticated():  # make sure user is logged in
+        logout(request)
+        return HttpResponseRedirect('/')
+    else:
+        return redirect('/login/')

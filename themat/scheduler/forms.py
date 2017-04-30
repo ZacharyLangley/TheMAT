@@ -5,14 +5,16 @@ from django.forms.extras.widgets import SelectDateWidget
 
 class EventForm(forms.ModelForm):
     event_title = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}),max_length=128, help_text="Event Title: ")
-    begin_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),),)     # adds drop down menu
-    end_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),),)
+    begin_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),), help_text="Begin date: ")     # adds drop down menu
+    begin_time = forms.TimeField(input_formats=('%I:%M%p', '%I:%M %p'), widget=forms.TimeInput(attrs={'style' : 'color:black'}, format=('%I:%M%p')), help_text="Begin time: (Example: 12:00PM)")
+    end_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),), help_text="End date:")
+    end_time = forms.TimeField(input_formats=('%I:%M%p', '%I:%M %p'), widget=forms.TimeInput(attrs={'style' : 'color:black'}, format=('%I:%M%p')), help_text="End time: ")
     event_description = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}),max_length=128, help_text="Event Description: ")
     img_url = forms.URLField(widget=forms.TextInput(attrs={'style' : 'color:black'}), help_text="Image URL: ", required=False)
 
     class Meta:
         model = Event
-        fields = ('event_title', 'begin_date', 'end_date', 'event_description', 'img_url')
+        fields = ('event_title', 'begin_date', 'begin_time', 'end_date', 'end_time', 'event_description', 'img_url')
 
 class VenueForm(forms.ModelForm):
     Vname = forms.CharField(required=True, max_length=128,help_text="Venue: ")

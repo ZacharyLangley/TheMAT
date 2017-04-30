@@ -35,6 +35,10 @@ class Event(models.Model):
     def __str__(self):
         return self.event_title
 
+    #Used to go back to event after updating
+    def get_absolute_url(self):
+        return '/event/' + str(self.id)
+        
     def was_published_recently(self):
         return self.end_date >= timezone.now() - datetime.timedelta(days=1)
     was_published_recently.admin_order_field = 'begin_date'

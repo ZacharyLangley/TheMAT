@@ -15,6 +15,11 @@
                 <li>Likes: {{event.likes}}</li>
                 <li>Views: {{event.views}}</li>
               </ul>
+              {% if up.location == event.location %}
+              <a href="/editevent/{{event.id}}/" class="btn btn-info" role="button">Edit Event</a>
+              <a href="/deleteevent/{{event.id}}/" class="btn btn-danger" role="button">Delete Event</a>
+
+              {% endif %}
             </div>
           </div>
         </div>
