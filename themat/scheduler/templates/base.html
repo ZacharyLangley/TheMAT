@@ -43,8 +43,13 @@
                     <a href="/">Home</a>
                 </li>
                 <li>
-                    <a href="/profile">Profile</a>
+                    <a href="/profile">{{up}}</a>
                 </li>
+                {% if up.is_venue%}
+                <li>
+                    <a href="/venue/{{up.location.id}}">{{up.location.venue_name}}</a>
+                </li>
+                {% endif %}
                 <li>
                     <a href="/venues">Venues</a>
                 </li>

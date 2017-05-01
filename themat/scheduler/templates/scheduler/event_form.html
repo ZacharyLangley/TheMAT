@@ -4,14 +4,24 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="section ">
+    <div style = "background-color: darkseagreen;" class="section">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h1>Edit Event</h1>
-            <form style="color: #444" action="" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+            <h1 style="color: white">Edit Event</h1>
+            <form style="color: white" action="" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
               {% csrf_token %}
-              {{ form.as_p }}
+              {% for hidden in form.hidden_fields %}
+              {{ hidden }}
+              {% endfor %}
+
+              {% for field in form.visible_fields %}
+              <p style="color:red">{{ field.errors }}</p>
+              {{ field.label}}
+              {{ field }}
+              {{ field.help_text}}
+
+              {% endfor %}
               <input type="submit" value="Submit" />
             </form>
           </div>

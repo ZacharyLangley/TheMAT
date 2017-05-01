@@ -187,9 +187,7 @@ def add_event(request):
 
 class UpdateEvent(UpdateView):
     model = Event
-    fields = [
-        'event_title', 'begin_date', 'end_date', 'event_description', 'img_url'
-    ]
+    form_class = EventForm
 
     #Checks to see if user is logged in and is updating their own object
     def user_passes_test(self, request):
@@ -204,6 +202,13 @@ class UpdateEvent(UpdateView):
             return redirect('/')
         return super(UpdateEvent, self).dispatch(
             request, *args, **kwargs)
+
+    def form_valid(self, form):
+        # Check if category matches subcategory
+        self.object.begin_date = str(form.cleaned_data['begin_date']) + ' ' + str(form.cleaned_data['begin_time'])
+        self.object.end_date = str(form.cleaned_data['end_date']) + ' ' + str(form.cleaned_data['end_time'])
+        return super(UpdateEvent, self).form_valid(form)
+
 
 class DeleteEvent(DeleteView):
     model = Event
@@ -220,6 +225,28 @@ class DeleteEvent(DeleteView):
             return obj
         else:
             raise Http404
+
+class UpdateVenue(UpdateView):
+    model = Venue
+    form_class = VenueForm
+
+    #Checks to see if user is logged in and is updating their own object
+    def user_passes_test(self, request):
+        if request.user.is_authenticated():
+            venue_manager = UserProfile.objects.get(user=request.user)
+            self.object = self.get_object()
+            return self.object == venue_manager.location
+        return False
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.user_passes_test(request):
+            return redirect('/')
+        return super(UpdateVenue, self).dispatch(
+            request, *args, **kwargs)
+
+    def form_valid(self, form):
+        # Check if category matches subcategory
+        return super(UpdateVenue, self).form_valid(form)
 
 def userprofile(request):
     if request.user.is_authenticated():  # make sure user is logged in

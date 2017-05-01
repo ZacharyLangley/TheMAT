@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block body_block %}
-<div class="section">
+<div style="background-color:LightCoral;"class="section">
   <div class="container">
     <form style="color: #444" action="" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
         {% csrf_token %}
-        <h2>Are you sure you want to delete event "{{ object.event_title }}" scheduled {{object.begin_date}}?</h2>
+        <h2 style="color: white">Are you sure you want to delete event "{{ object.event_title }}" scheduled {{object.begin_date}}?</h2>
         <input type="submit" value="Confirm" />
     </form>
   </div>

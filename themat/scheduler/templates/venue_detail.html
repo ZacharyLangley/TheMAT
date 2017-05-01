@@ -47,6 +47,7 @@ $(document).ready(function() {
                 </ul>
                   <input class="btn btn-primary" type="submit" value="Like {{ venue.venue_name }}!" style="background-color:darkgrey "/>
                   {% if up.location == venue %}
+                  <a href="/editvenue/{{venue.id}}" class="btn btn-success" role="button">Edit Venue</a>
                   <a href="/add_event/" class="btn btn-info" role="button">Add Event</a>
                   {% endif %}
 

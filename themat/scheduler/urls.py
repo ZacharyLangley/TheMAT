@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^venues/$', views.venue_list, name='venues list'),
     url(r'^venue/(?P<venue_id>[0-9]+)$', views.venue_detail, name="venue detail"),
+    url(r'^editvenue/(?P<pk>[0-9]+)$', views.UpdateVenue.as_view(), name="edit venue"),
     url(r'^event/(?P<event_id>[0-9]+)$', views.event_detail, name="event detail"),
     url(r'^editevent/(?P<pk>[0-9]+)/$', views.UpdateEvent.as_view(), name="edit event"),
     url(r'^deleteevent/(?P<pk>[0-9]+)/$', views.DeleteEvent.as_view(), name="delete event"),

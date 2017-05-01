@@ -19,6 +19,9 @@ class Venue(models.Model):
     def __str__(self):
         return self.venue_name
 
+    def get_absolute_url(self):
+        return '/venue/' + str(self.id)
+
 class Event(models.Model):
     event_title = models.CharField(max_length=200)
     begin_date = models.DateTimeField('begin date')
@@ -38,7 +41,7 @@ class Event(models.Model):
     #Used to go back to event after updating
     def get_absolute_url(self):
         return '/event/' + str(self.id)
-        
+
     def was_published_recently(self):
         return self.end_date >= timezone.now() - datetime.timedelta(days=1)
     was_published_recently.admin_order_field = 'begin_date'

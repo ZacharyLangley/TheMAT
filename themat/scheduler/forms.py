@@ -4,28 +4,27 @@ from django.contrib.auth.models import User
 from django.forms.extras.widgets import SelectDateWidget
 
 class EventForm(forms.ModelForm):
-    event_title = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}),max_length=128, help_text="Event Title: ")
-    begin_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),), help_text="Begin date: ")     # adds drop down menu
-    begin_time = forms.TimeField(input_formats=('%I:%M%p', '%I:%M %p'), widget=forms.TimeInput(attrs={'style' : 'color:black'}, format=('%I:%M%p')), help_text="Begin time: (Example: 12:00PM)")
-    end_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),), help_text="End date:")
-    end_time = forms.TimeField(input_formats=('%I:%M%p', '%I:%M %p'), widget=forms.TimeInput(attrs={'style' : 'color:black'}, format=('%I:%M%p')), help_text="End time: ")
-    event_description = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}),max_length=128, help_text="Event Description: ")
-    img_url = forms.URLField(widget=forms.TextInput(attrs={'style' : 'color:black'}), help_text="Image URL: ", required=False)
+    event_title = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}),max_length=128,)
+    begin_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),),)     # adds drop down menu
+    begin_time = forms.TimeField(input_formats=('%I:%M%p', '%I:%M %p'), widget=forms.TimeInput(attrs={'style' : 'color:black'}, format=('%I:%M%p')), help_text="Ex: 12:00PM")
+    end_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),),)
+    end_time = forms.TimeField(input_formats=('%I:%M%p', '%I:%M %p'), widget=forms.TimeInput(attrs={'style' : 'color:black'}, format=('%I:%M%p')))
+    event_description = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}),max_length=128,)
+    img_url = forms.URLField(widget=forms.TextInput(attrs={'style' : 'color:black'}), required=False)
 
     class Meta:
         model = Event
         fields = ('event_title', 'begin_date', 'begin_time', 'end_date', 'end_time', 'event_description', 'img_url')
 
 class VenueForm(forms.ModelForm):
-    Vname = forms.CharField(required=True, max_length=128,help_text="Venue: ")
-    location = forms.CharField(required=True, max_length=128, help_text="Location: ")
-    rating = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    venue_name = forms.CharField(required=True, max_length=128)
+    location = forms.CharField(required=True, max_length=128)
+    description = forms.CharField(required=True, max_length=1000)
+    img_url = forms.URLField(widget=forms.TextInput(attrs={'style' : 'color:black'}), required=False)
 
     class Meta:
         model = Venue
-        fields = ('Vname', 'location', 'rating', 'views', 'likes')
+        fields = ('venue_name', 'location', 'description', 'img_url')
 
 class UserForm(forms.ModelForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}), help_text="* Username: ")

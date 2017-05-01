@@ -6,12 +6,12 @@
 			<div class="col-md-12">
 				<h1>Profile</h1>
 				{% if userprofile.picture %}
-					<img src="{{ userprofile.picture.url }}" height="300" width="200"/>
+						<img src="{{ userprofile.picture.url }}" class="img-responsive">
 				{% else %}
 					<img src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_6-512.png" style="width:300px;height:300px">
 				{% endif %}
 
-				<p><font size = "5">Username: {{ user.username }}</font></p>
+				<h2>Username: {{ user.username }}</h2>
 				<p>Email: {{ user.email }}</p>
 				{% if userprofile.website %}
 					<p>Website: <a href="{{ userprofile.website }}">{{userprofile.website}}</a></p>

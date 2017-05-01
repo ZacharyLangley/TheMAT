@@ -17,24 +17,26 @@
 
     </div>
     <div class="col-xs-4">
-    <div>
-        <form id="user_form" method="post" action="/add_event/" enctype="multipart/form-data">
-            {% csrf_token %}
-            <h1>Add a New Event Here</h1>
-            {% for hidden in form.hidden_fields %}
-            {{ hidden }}
-            {% endfor %}
+      <div>
+          <form id="user_form" method="post" action="/add_event/" enctype="multipart/form-data">
+              {% csrf_token %}
+              <h1>New Event Form</h1>
+              {% for hidden in form.hidden_fields %}
+              {{ hidden }}
+              {% endfor %}
 
-            {% for field in form.visible_fields %}
-            <p style="color:red">{{ field.errors }}</p>
-            {{ field.help_text}}<br/>
-            {{ field }}<br/>
-            {% endfor %}
+              {% for field in form.visible_fields %}
+              <p style="color:red">{{ field.errors }}</p>
+              {{ field.label}}
+              {{ field }}
+              {{ field.help_text}}
 
-            <br/>
-            <input class="btn btn-primary" type="submit" name="submit" value="Create" style="background-color:darkgrey "/>
-        </form>
-    </div>
+              {% endfor %}
+
+              <br/>
+              <input class="btn btn-primary" type="submit" name="submit" value="Create" style="background-color:darkgrey"/>
+          </form>
+      </div>
     </div>
 
 </div>
