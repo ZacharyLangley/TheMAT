@@ -3,7 +3,7 @@
 <div class="section">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-6">
 				<h1>Profile</h1>
 				{% if userprofile.picture %}
 						<img src="{{ userprofile.picture.url }}" class="img-responsive">
@@ -18,6 +18,20 @@
 				{% endif %}
 				<p>Subscribed Venues: </p>
 				<input class="btn btn-primary" type="submit" value="Edit Profile" style="background-color:darkgrey "/>
+			</div>
+			<div class="col-md-6">
+				<h1>Events Attending:</h1>
+				<ul class="media-list">
+					{% for a in attendance %}
+					<li class="media">
+						<a class="pull-left" href="/event/{{a.event.id}}"><img class="media-object" src="{{a.event.img_url}}" height="64" width="64"></a>
+						<div class="media-body">
+							<h4 class="media-heading">{{a.event.event_title}}</h4>
+							<h5 class="media-heading">From: {{a.event.begin_date}} To: {{a.event.end_date}}</h5>
+						</div>
+					</li>
+					{% endfor %}
+				</ul>
 			</div>
 		</div>
 

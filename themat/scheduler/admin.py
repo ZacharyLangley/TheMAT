@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, Venue, UserProfile
+from .models import Event, Venue, UserProfile, AttendEvent
 # Register your models here.
 class EventAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -40,6 +40,16 @@ class VenueAdmin(admin.ModelAdmin):
     list_display = ('venue_name', 'location', 'rating', 'likes', 'views')
     search_fields = ['venue_name']
 
+class AttendEventAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['user']}),
+        ('Event', {'fields': ['event']}),
+        ]
+    list_display = ('user', 'event')
+    list_filter = ['user', 'event']
+    search_fields = ['event']
+
 admin.site.register(Event, EventAdmin)
 admin.site.register(Venue, VenueAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(AttendEvent, AttendEventAdmin)

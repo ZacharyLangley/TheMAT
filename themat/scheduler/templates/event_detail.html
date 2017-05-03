@@ -15,6 +15,13 @@
                 <li>Likes: {{event.likes}}</li>
                 <li>Views: {{event.views}}</li>
               </ul>
+              {% if user.is_authenticated %}
+              {% if userattendeance == False %}
+              <a class="btn btn-block btn-success" href="/attendevent/{{event.id}}">I'm Attending!</a>
+              {% else %}
+              <a class="btn btn-block btn-danger" href="/unattendevent/{{event.id}}">Not Attending</a>
+              {% endif %}
+              {% endif %}
               {% if up.location == event.location %}
               <a href="/editevent/{{event.id}}/" class="btn btn-info" role="button">Edit Event</a>
               <a href="/deleteevent/{{event.id}}/" class="btn btn-danger" role="button">Delete Event</a>
@@ -29,6 +36,37 @@
           <p>{{ venue.location}}</p>
           <hr>
           <p>From <b>{{event.begin_date}}</b> until <b>{{event.end_date}}</b></p><hr><p>{{event.event_description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Who's Attending?</h1>
+          {% if not attendance %}
+          <h2>Be the first to RSVP!</h2>
+          {% endif %}
+        </div>
+        {% for a,p in attendanceprofiles %}
+        <div class="col-md-3">
+          <ul class="media-list">
+            <li class="media">
+              {% if p.picture %}
+              <img class="media-object" src="{{ p.picture.url }}" height="64" width="64">
+              {% else %}
+              <img class="media-object" src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_6-512.png" height="64" width="64">
+              {% endif %}
+              <div class="media-body">
+                <h4 class="media-heading">{{a.username}}</h4>
+              </div>
+            </li>
+          </ul>
+        </div>
+        {% if forloop.counter|divisibleby:4%}
+        </div>
+        <div class="row">
+        {% endif %}
+        {% endfor %}
         </div>
       </div>
     </div>

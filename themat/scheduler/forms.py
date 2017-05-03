@@ -9,7 +9,7 @@ class EventForm(forms.ModelForm):
     begin_time = forms.TimeField(input_formats=('%I:%M%p', '%I:%M %p'), widget=forms.TimeInput(attrs={'style' : 'color:black'}, format=('%I:%M%p')), help_text="Ex: 12:00PM")
     end_date = forms.DateField(widget=SelectDateWidget(attrs={'style' : 'color:black'}, empty_label=("Choose Year", "Choose Month", "Choose Day"),),)
     end_time = forms.TimeField(input_formats=('%I:%M%p', '%I:%M %p'), widget=forms.TimeInput(attrs={'style' : 'color:black'}, format=('%I:%M%p')))
-    event_description = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}),max_length=128,)
+    event_description = forms.CharField(widget=forms.TextInput(attrs={'style' : 'color:black'}),max_length=1000,)
     img_url = forms.URLField(widget=forms.TextInput(attrs={'style' : 'color:black'}), required=False)
 
     class Meta:

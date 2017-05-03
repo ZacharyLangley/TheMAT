@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, render_to_response
 from .models import Venue, Event
-from scheduler.models import Event, Venue, UserProfile
+from scheduler.models import Event, Venue, UserProfile, AttendEvent
 from scheduler.forms import EventForm, VenueForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -71,13 +71,32 @@ def venue_detail(request, venue_id):
 def event_detail(request, event_id):
     rc = RequestContext(request)
 
+    # Retrieve event page inforamtion
     event = Event.objects.get(id=event_id)
     venue = Venue.objects.get(id=event.location.id)
+    attendance = AttendEvent.objects.filter(event=event.id)
     if request.user.is_authenticated():  # make sure user is logged in
+        # Check if the user is marked as attending this event
+        try:
+            userattendeance = AttendEvent.objects.get(user=request.user, event=event_id)
+        except:
+            userattendeance = False
+        # Retrieve current user's profile to see if they are the
+        # event's venue manager
         up = UserProfile.objects.get(user=request.user)
-        context = {'venue': venue, 'event': event, 'up':up}
+        print(attendance)
+        attendanceprofiles = []
+        for a in attendance:
+            profile = UserProfile.objects.get(user=a.user)
+            pair = (a.user, profile)
+            attendanceprofiles.append(pair)
+        print(attendanceprofiles)
+        context = {'venue': venue, 'event': event,
+                    'attendance': attendance,'up':up,
+                    'userattendeance': userattendeance,
+                    'attendanceprofiles':attendanceprofiles}
     else:
-        context = {'venue': venue, 'event': event}
+        context = {'venue': venue, 'event': event, 'attendance':attendance}
 
     response = render_to_response('event_detail.html', context, rc)
 
@@ -95,6 +114,44 @@ def event_detail(request, event_id):
         event.save()
 
     return response
+
+def attend_event(request, event_id):
+    if request.user.is_authenticated():
+        user = User.objects.get(id=request.user.id)
+        event = Event.objects.get(id=event_id)
+        try:
+            checkattendance = AttendEvent.objects.get(user=user, event=event)
+        except:
+            checkattendance = False
+
+        # If the user is not already attending, mark them as attending
+        if checkattendance is False:
+            attendance = AttendEvent(user=user, event=event)
+            attendance.save()
+            return redirect(event.get_absolute_url())
+        # Else, send them back to the event page
+        else:
+            return redirect(event.get_absolute_url())
+    else:
+        return redirect('/login')
+
+def unattend_event(request, event_id):
+    if request.user.is_authenticated():
+        user = User.objects.get(id=request.user.id)
+        event = Event.objects.get(id=event_id)
+        try:
+            attendance = AttendEvent.objects.get(user=user, event=event)
+        except:
+            attendance = False
+
+        if attendance is not False:
+            attendance.delete()
+        else:
+            return redirect(event.get_absolute_url())
+
+        return redirect(event.get_absolute_url())
+    else:
+        return redirect('/login')
 
 def user_login(request):
     context = RequestContext(request)
@@ -257,11 +314,14 @@ def userprofile(request):
             up = UserProfile.objects.get(user=u)
         except:
             up = None
+        attendance = AttendEvent.objects.filter(user=u)
         context_dict['user'] = u
         context_dict['userprofile'] = up
+        context_dict['attendance'] = attendance
         context_dict = {
             'user':u,
-            'userprofile':up
+            'userprofile':up,
+            'attendance':attendance
         }
         return render_to_response('userprofile.html', context_dict, context)
     else:
