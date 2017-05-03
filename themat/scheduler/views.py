@@ -84,13 +84,11 @@ def event_detail(request, event_id):
         # Retrieve current user's profile to see if they are the
         # event's venue manager
         up = UserProfile.objects.get(user=request.user)
-        print(attendance)
         attendanceprofiles = []
         for a in attendance:
             profile = UserProfile.objects.get(user=a.user)
             pair = (a.user, profile)
             attendanceprofiles.append(pair)
-        print(attendanceprofiles)
         context = {'venue': venue, 'event': event,
                     'attendance': attendance,'up':up,
                     'userattendeance': userattendeance,

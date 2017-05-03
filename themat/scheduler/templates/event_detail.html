@@ -1,9 +1,20 @@
 {% extends 'base.html' %}
+{% load social_widgets %}
 {% block script_block %}
 
 {% endblock %}
 
 {% block body_block %}
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
 <div class="section">
     <div class="container">
       <div class="row">
@@ -14,6 +25,12 @@
               <ul class="breadcrumb">
                 <li>Likes: {{event.likes}}</li>
                 <li>Views: {{event.views}}</li>
+                <li>
+                  {% social_widget_render "facebook/share_button.html" layout="button"%}
+                </li>
+                <li style="list-style-type: none; display: inline-block; vertical-align: top;">
+                  {% social_widget_render "twitter/share_button.html" %}
+                </li>
               </ul>
               {% if user.is_authenticated %}
               {% if userattendeance == False %}

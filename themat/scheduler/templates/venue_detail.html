@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load social_widgets %}
 {% block script_block %}
 $(document).ready(function() {
 
@@ -41,9 +42,15 @@ $(document).ready(function() {
                 <h4>{{ venue.location }}</h4>
                 <p>{{venue.description}}</p>
                 <ul class="breadcrumb">
-                  <li>Rating: {{ venue.rating }}</li>
-                  <li># of Likes: {{ venue.likes }}</li>
-                  <li># of Views: {{ venue.views }}</li>
+                  <li style="font-size: .9em">Rating: {{ venue.rating }}</li>
+                  <li style="font-size: .9em">Likes: {{ venue.likes }}</li>
+                  <li style="font-size: .9em">Views: {{ venue.views }}</li>
+                  <li>
+                    {% social_widget_render "facebook/share_button.html" layout="button"%}
+                  </li>
+                  <li style="list-style-type: none; display: inline-block; vertical-align: top;">
+                    {% social_widget_render "twitter/share_button.html" %}
+                  </li>
                 </ul>
                   {% if up.location == venue %}
                   <a href="/editvenue/{{venue.id}}" class="btn btn-success" role="button">Edit Venue</a>
