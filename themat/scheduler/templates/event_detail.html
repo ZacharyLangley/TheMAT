@@ -38,6 +38,8 @@
               {% else %}
               <a class="btn btn-block btn-danger" href="/unattendevent/{{event.id}}">Not Attending</a>
               {% endif %}
+              {% else%}
+              <a class="btn btn-block btn-success" href="/login">Login to RSVP!</a>
               {% endif %}
               {% if up.location == event.location %}
               <a href="/editevent/{{event.id}}/" class="btn btn-info" role="button">Edit Event</a>

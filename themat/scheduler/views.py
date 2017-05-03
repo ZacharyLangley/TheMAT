@@ -75,6 +75,11 @@ def event_detail(request, event_id):
     event = Event.objects.get(id=event_id)
     venue = Venue.objects.get(id=event.location.id)
     attendance = AttendEvent.objects.filter(event=event.id)
+    attendanceprofiles = []
+    for a in attendance:
+        profile = UserProfile.objects.get(user=a.user)
+        pair = (a.user, profile)
+        attendanceprofiles.append(pair)
     if request.user.is_authenticated():  # make sure user is logged in
         # Check if the user is marked as attending this event
         try:
@@ -84,17 +89,13 @@ def event_detail(request, event_id):
         # Retrieve current user's profile to see if they are the
         # event's venue manager
         up = UserProfile.objects.get(user=request.user)
-        attendanceprofiles = []
-        for a in attendance:
-            profile = UserProfile.objects.get(user=a.user)
-            pair = (a.user, profile)
-            attendanceprofiles.append(pair)
         context = {'venue': venue, 'event': event,
                     'attendance': attendance,'up':up,
                     'userattendeance': userattendeance,
                     'attendanceprofiles':attendanceprofiles}
     else:
-        context = {'venue': venue, 'event': event, 'attendance':attendance}
+        context = {'venue': venue, 'event': event, 'attendance':attendance,
+        'attendanceprofiles':attendanceprofiles}
 
     response = render_to_response('event_detail.html', context, rc)
 
