@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, render_to_response
 from .models import Venue, Event
-from scheduler.models import Event, Venue, UserProfile, AttendEvent
+from scheduler.models import Event, Venue, UserProfile, AttendEvent, LikedVenue
 from scheduler.forms import EventForm, VenueForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -46,9 +46,18 @@ def venue_detail(request, venue_id):
 
     venue = Venue.objects.get(id=venue_id)
     events = Event.objects.filter(location=venue)
+    userlikes = None
+
     if request.user.is_authenticated():  # make sure user is logged in
+
+        try:
+            userlikes = LikedVenue.objects.get(user=request.user, venue=venue_id)
+
+        except:
+            userlikes = False
+
         up = UserProfile.objects.get(user=request.user)
-        context = {'venue': venue, 'events': events, 'up':up}
+        context = {'venue': venue, 'events': events, 'up':up, 'userlikes':userlikes}
     else:
         context = {'venue': venue, 'events': events}
 
@@ -67,6 +76,48 @@ def venue_detail(request, venue_id):
         venue.views += 1
         venue.save()
     return response
+
+def like_venue(request, venue_id):
+    if request.user.is_authenticated():
+        user = User.objects.get(id=request.user.id)
+        venue = Venue.objects.get(id=venue_id)
+        try:
+            checkLike = LikedVenue.objects.get(user=user, venue=venue)
+        except:
+            checkLike = False
+
+        # If the user doesn't like them yet, mark them as "liking"
+        if checkLike is False:
+            liked = LikedVenue(user=user, venue=venue)
+            liked.save()
+            venue.likes += 1
+            venue.save()
+            return redirect(venue.get_absolute_url())
+        # Else, send them back to the venue page
+        else:
+            return redirect(venue.get_absolute_url())
+    else:
+        return redirect('/login')
+
+def unlike_venue(request, venue_id):
+    if request.user.is_authenticated():
+        user = User.objects.get(id=request.user.id)
+        venue = Venue.objects.get(id=venue_id)
+        try:
+            checkLike = LikedVenue.objects.get(user=user, venue=venue)
+        except:
+            checkLike = False
+
+        if checkLike is not False:
+            checkLike.delete()
+            venue.likes -= 1
+            venue.save()
+        else:
+            return redirect(venue.get_absolute_url())
+
+        return redirect(venue.get_absolute_url())
+    else:
+        return redirect('/login')
 
 def event_detail(request, event_id):
     rc = RequestContext(request)
@@ -124,7 +175,7 @@ def attend_event(request, event_id):
             checkattendance = False
 
         # If the user is not already attending, mark them as attending
-        if checkattendance is False:
+        if checkattendance == False:
             attendance = AttendEvent(user=user, event=event)
             attendance.save()
             return redirect(event.get_absolute_url())
@@ -143,7 +194,7 @@ def unattend_event(request, event_id):
         except:
             attendance = False
 
-        if attendance is not False:
+        if attendance != False:
             attendance.delete()
         else:
             return redirect(event.get_absolute_url())

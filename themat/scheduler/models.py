@@ -71,3 +71,13 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class LikedVenue(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+
+    def __unicode__(self):
+        return self.user.username + ' ' + self.venue.venue_name
+
+    def __str__(self):
+        return self.user.username + ' ' + self.venue.venue_name

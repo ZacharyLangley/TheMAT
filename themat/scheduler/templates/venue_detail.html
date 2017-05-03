@@ -52,11 +52,16 @@ $(document).ready(function() {
                     {% social_widget_render "twitter/share_button.html" %}
                   </li>
                 </ul>
+                    {% if user.is_authenticated %}
+                      {% if userlikes == False %}
+                          <a class="btn btn-block btn-success" href="/likevenue/{{venue.id}}">Like {{ venue.venue_name }}!</a>
+                      {% else %}
+                          <a class="btn btn-block btn-success" href="/unlikevenue/{{venue.id}}">Unlike {{ venue.venue_name }}</a>
+                      {% endif %}
+                    {% endif %}
                   {% if up.location == venue %}
                   <a href="/editvenue/{{venue.id}}" class="btn btn-success" role="button">Edit Venue</a>
                   <a href="/add_event/" class="btn btn-info" role="button">Add Event</a>
-                  {% else %}
-                  <input class="btn btn-primary" type="submit" value="Like {{ venue.venue_name }}!" style="background-color:darkgrey "/>
                   {% endif %}
 
               </div>
