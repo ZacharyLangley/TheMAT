@@ -1,9 +1,39 @@
 {% extends "base.html" %}
+{% block script_block %}
+    <!-- <script type="text/javascript"> -->
+            $(document).ready(function() {
+
+                          // page is now ready, initialize the calendar...
+                          $('#calendar').fullCalendar({
+                            header: {
+                        				left: 'prev,next today',
+                        				center: 'title',
+                        				right: 'month,basicWeek,basicDay,listMonth'
+                        			},
+
+                              //put your options and callbacks here
+                              navLinks: true, // can click day/week names to navigate views
+                              eventLimit: true, // allow "more" link when too many events
+                              events: [
+                                {% for e in subscribedevents %}
+                                {
+                                  title: '{{e.event_title}}',
+                                  start: '{{e.begin_date|date:"c"}}', // the "c" modifier converts date/time to proper format
+                                  end: '{{e.end_date|date:"c"}}',
+                                  url: '/event/{{ e.id }}'
+                                },
+                                {% endfor %}
+                              ]
+                          });
+            });
+
+{% endblock %}
+
 {% block body_block %}
 <div class="section">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<h1>Profile</h1>
 				{% if userprofile.picture %}
 						<img src="{{ userprofile.picture.url }}" class="img-responsive">
@@ -16,11 +46,32 @@
 				{% if userprofile.website %}
 					<p>Website: <a href="{{ userprofile.website }}">{{userprofile.website}}</a></p>
 				{% endif %}
-				<p>Subscribed Venues: </p>
 				<input class="btn btn-primary" type="submit" value="Edit Profile" style="background-color:darkgrey "/>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
+	      <h1>Liked Venues:</h1>
+				{% if not likedvenues%}
+					<h3 style="color:darkgray">
+						<i>Like venues to keep track of their events!</i>
+					</h3>
+				{% endif %}
+	      <ul class="media-list">
+					{% for v in likedvenues %}
+	        <li class="media">
+	          <a class="pull-left" href="/venue/{{v.venue.id}}"><img class="media-object" src="{{v.venue.img_url}}" height="64" width="64"></a>
+	          <div class="media-body">
+	            <h4 class="media-heading">{{v.venue.venue_name}}</h4>
+	            <h5 class="media-heading">{{v.venue.location}}</h5>
+	          </div>
+	        </li>
+					{% endfor %}
+	      </ul>
+			</div>
+			<div class="col-md-4">
 				<h1>Events Attending:</h1>
+				{% if not attendance%}
+					<h3 style="color:darkgray"><i>RSVP to an event!</i></h3>
+				{% endif %}
 				<ul class="media-list">
 					{% for a in attendance %}
 					<li class="media">
@@ -36,5 +87,15 @@
 		</div>
 
     </div>
+			<div class="container">
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+					<h1 style="text-align: center">Liked Venues Event Calendar</h1>
+					<div id="calendar"></div>
+				</div>
+			</div>
+		</div>
+
 </div>
 {% endblock %}

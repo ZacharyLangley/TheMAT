@@ -365,13 +365,21 @@ def userprofile(request):
         except:
             up = None
         attendance = AttendEvent.objects.filter(user=u)
+        likedvenues = LikedVenue.objects.filter(user=u)
+        subscribedevents = []
+        for v in likedvenues:
+            events = Event.objects.filter(location=v.venue)
+            for e in events:
+                subscribedevents.append(e)
         context_dict['user'] = u
         context_dict['userprofile'] = up
         context_dict['attendance'] = attendance
         context_dict = {
             'user':u,
             'userprofile':up,
-            'attendance':attendance
+            'attendance':attendance,
+            'likedvenues':likedvenues,
+            'subscribedevents':subscribedevents
         }
         return render_to_response('userprofile.html', context_dict, context)
     else:
