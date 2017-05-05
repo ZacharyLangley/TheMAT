@@ -1,54 +1,50 @@
 {% extends "base.html" %}
 
 {% block body_block %}
-<body style="color:white">
-<div class="section" style="background-color: darkseagreen">
-    <div class="container">
-
-    <br />
-    <div class="col-xs-8">
-        <div class="col-xs-2"></div>
-
-        <div class="col-xs-10">
-            <h1>Register</h1>
-            <h3>Be a part of the bustling culture of Denton</h3>
-        </div>
-
-    </div>
-    <div class="col-xs-4">
+<div class="section" style="background-color: darkseagreen; color: white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-5">
+        <h1>Register</h1>
+        <h3>Be a part of the bustling culture of Denton</h3>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-4">
         {% if registered %}
-        <p> Thank you for registering.</p>
-
-        <p><a href="/login/">Login</a></p>
+          <p> Thank you for registering.</p>
+          <p><a href="/login/">Login</a></p>
         {% else %}
-            {% if user.is_authenticated %}
-                <p>You are already logged in</p>
-            {% else %}
-            <form id="user_form" method="post" action="/register/" enctype="multipart/form-data">
-            {% csrf_token %}
-            <h1>Sign up Here</h1>
-            <h4>* - REQUIRED</h4>
-            <!-- Display each form here -->
-                {% for field in user_form.visible_fields %}
-                <p style="color:red">{{ field.errors }}</p>
-                {{ field.help_text}}<br/>
-                {{ field }}<br/>
-                {% endfor %}
+          {% if user.is_authenticated %}
+              <p>You are already logged in</p>
+          {% else %}
+          <form id="user_form" method="post" action="/register/" enctype="multipart/form-data">
+          {% csrf_token %}
+          <h1>Sign up Here</h1>
+          <h4>* - REQUIRED</h4>
+          <!-- Display each form here -->
+              {% for field in user_form.visible_fields %}
+              <p style="color:red">{{ field.errors }}</p>
+              {{ field.help_text}}<br/>
+              {{ field }}<br/>
+              {% endfor %}
 
-                {% for field in profile_form.visible_fields %}
-                <p style="color:red">{{ field.errors }}</p>
-                {{ field.help_text}}<br/>
-                {{ field }}<br/>
-                {% endfor %}
+              {% for field in profile_form.visible_fields %}
+              <p style="color:red">{{ field.errors }}</p>
+              {{ field.help_text}}<br/>
+              {{ field }}<br/>
+              {% endfor %}
 
-                <br />
+              <br />
 
-                <!-- Provide a button to click to submit the form. -->
-                <input class="btn btn-primary" type="submit" name="submit" value="Register" style="background-color:darkgrey "/>
-            </form>
-            {% endif %}
+              <!-- Provide a button to click to submit the form. -->
+              <input class="btn btn-primary" type="submit" name="submit" value="Register" style="background-color:darkgrey "/>
+          </form>
+          {% endif %}
         {% endif  %}
+      </div>
     </div>
-    </div>
+  </div>
 </div>
+
 {% endblock  %}
